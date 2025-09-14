@@ -45,7 +45,10 @@ MU_ANGMAX (RO)   Kuhn-Tucker multiplier upper angle difference limit
 from typing import TypeVar
 import pypower.idx_brch as branch
 import numpy as np
-from data import Data
+try:
+    from data import Data
+except ModuleNotFoundError:
+    from .data import Data
 
 class Branch(Data):
     """Branch data accessor"""

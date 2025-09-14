@@ -43,7 +43,10 @@ To implement an object XYZ accessor use the following template
 import json
 from typing import TypeVar
 import numpy as np
-from index import pp_index
+try:
+    from index import pp_index
+except ModuleNotFoundError:
+    from .index import pp_index
 
 class Data:
     """PP object data base class"""

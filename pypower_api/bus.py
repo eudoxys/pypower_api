@@ -42,7 +42,10 @@ NONE    Isolated bus
 from typing import TypeVar
 import pypower.idx_bus as bus
 import numpy as np
-from data import Data
+try:
+    from data import Data
+except ModuleNotFoundError:
+    from .data import Data
 
 class Bus(Data):
     """Bus data accessor"""

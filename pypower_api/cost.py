@@ -23,7 +23,10 @@ POLYNOMIAL  Polynomial cost function (N parameters)
 from typing import TypeVar
 import pypower.idx_cost as cost
 import numpy as np
-from data import Data
+try:
+    from data import Data
+except ModuleNotFoundError:
+    from .data import Data
 
 class Cost(Data):
     """Cost data accessor"""

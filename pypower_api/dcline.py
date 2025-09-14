@@ -40,7 +40,10 @@ MU_QMAXT (RO)   Kuhn-Tucker multiplier on upper VAr lim at  "to"  bus (u/MVAr)
 from typing import TypeVar
 import pypower.idx_dcline as dcline
 import numpy as np
-from data import Data
+try:
+    from data import Data
+except ModuleNotFoundError:
+    from .data import Data
 
 class Dcline(Data):
     "DC line data accessor"

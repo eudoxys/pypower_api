@@ -30,13 +30,22 @@ import pypower.idx_gen as gen
 import pypower.idx_dcline as dcline
 import pypower.idx_cost as cost
 
-from index import pp_index
-from data import Data
-from bus import Bus
-from branch import Branch
-from gen import Gen
-from cost import Gencost, Dclinecost
-from dcline import Dcline
+try:
+    from index import pp_index
+    from data import Data
+    from bus import Bus
+    from branch import Branch
+    from gen import Gen
+    from cost import Gencost, Dclinecost
+    from dcline import Dcline
+except ModuleNotFoundError:
+    from .index import pp_index
+    from .data import Data
+    from .bus import Bus
+    from .branch import Branch
+    from .gen import Gen
+    from .cost import Gencost, Dclinecost
+    from .dcline import Dcline
 
 
 DEBUG = True # enable raise on exceptions

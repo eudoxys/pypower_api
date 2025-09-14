@@ -42,7 +42,10 @@ MU_QMIN (RO)   Kuhn-Tucker multiplier on lower Qg limit (u/MVAr)
 from typing import TypeVar
 import pypower.idx_gen as gen
 import numpy as np
-from data import Data
+try:
+    from data import Data
+except ModuleNotFoundError:
+    from .data import Data
 
 class Gen(Data):
     "Generation data accessor"

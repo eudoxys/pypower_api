@@ -42,7 +42,8 @@ classifiers = [
 dependencies = [
     "numpy",
     "scipy",
-    "pypower"
+    "pypower",
+    "pandas"
 ]
 
 [project.scripts]
