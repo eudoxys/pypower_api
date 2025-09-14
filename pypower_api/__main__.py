@@ -53,7 +53,7 @@ def _solve(case,*args,**kwargs):
     except ModuleNotFoundError as err:
         raise FileNotFoundError(f"'{args[0]}' not found") from err
 
-def _print(case,output=None,*args,**kwargs):
+def _print(case,output=None,format="csv",*args,**kwargs):
 
     data = getattr(case,args[0])
     keys = pp_index[args[0]]
@@ -61,9 +61,15 @@ def _print(case,output=None,*args,**kwargs):
     df.index.name="ID"
     if len(df) == 0:
         return
-    result = df.to_csv(output)
-    if output is None:
-        print(result,end="")
+    if format == "csv":
+        result = df.to_csv(output,**kwargs)
+    elif format == "json":
+        result = df.T.to_json(output,**kwargs)
+    elif format == "dataframe":
+        print(df,file=output)
+        result = None
+    if output is None and not result is None:
+        print(result.strip())
 
 def main():
 
@@ -79,19 +85,24 @@ def main():
 
     parser.add_argument("-v","--verbose",
         action="store_true",
-        help="enable verbose output")
+        help="enable verbose output",
+        )
     parser.add_argument("-q","--quiet",
         action="store_true",
-        help="disable non-error output")
+        help="disable non-error output",
+        )
     parser.add_argument("-s","--silent",
         action="store_true",
-        help="disable all output")
+        help="disable all output",
+        )
     parser.add_argument("-d","--debug",
         action="store_true",
-        help="enable exception traceback")
+        help="enable exception traceback",
+        )
     parser.add_argument("-w","--warning",
         action="store_false",
-        help="disable warning output")
+        help="disable warning output",
+        )
 
     parser.add_argument("-i","--input",
         help="input file pathname",
@@ -99,14 +110,20 @@ def main():
         )
     parser.add_argument("-o","--output",
         help="output file pathname",
-        default=None
+        default=None,
+        )
+    parser.add_argument("-f","--format",
+        help="output data format",
+        default="dataframe",
         )
 
     parser.add_argument("command",
-        help="API command (use `pypower_api help` for details)")
+        help="API command (use `pypower_api help` for details)",
+        )
     parser.add_argument("arguments",
         nargs="?",
-        help="API command arguments")
+        help="API command arguments",
+        )
 
     args = parser.parse_args()
 
@@ -141,7 +158,7 @@ def main():
         pargs = [x for x in largs if not "=" in x]
         kargs = {x[0]:"=".join(x[1:]) for x in largs if "=" in x}
         try:
-            _print(case,args.output,*pargs,**kargs)
+            _print(case,args.output,args.format,*pargs,**kargs)
         except:
             e_type, e_name, _ = sys.exc_info()
             print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")

@@ -1,6 +1,6 @@
 # PyPOWER API
 
-As of Version 5.1.20 a Python convenience API is available for developers who wish to use PyPOWER as part of their applications.  The API provides the following convenience classes
+A Python convenience API is available for developers who wish to use PyPOWER as part of their applications.  The API provides the following convenience classes
 
 The `Case`: handles cases, include creating, reading, editing, solving, and writing cases. Cases use the following data accessor classes:
 
