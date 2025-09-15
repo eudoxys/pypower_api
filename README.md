@@ -54,8 +54,8 @@ Options:
     -d, --debug           enable exception traceback
     -w, --warning         disable warning output
     -i INPUT, --input INPUT
-                        input file pathname
+                          input file pathname
     -o OUTPUT, --output OUTPUT
-                        output file pathname
+                          output file pathname
     -f FORMAT, --format FORMAT
-                        output data format
+                          output data format
