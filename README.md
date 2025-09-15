@@ -35,3 +35,27 @@ The `Case` class also provide runners for powerflow, OPF, and CDF solvers, inclu
 ## Solving a case
 
 ## Extracting matrices
+
+# Command Line
+
+Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
+
+Commands:
+
+    solve [pf|opf|dcopf|uopf|duopf]
+    print [bus|branch|gen|gencost|dcline|dclinecost]
+
+Options:
+
+    -h, --help            show this help message and exit
+    -v, --verbose         enable verbose output
+    -q, --quiet           disable non-error output
+    -s, --silent          disable all output
+    -d, --debug           enable exception traceback
+    -w, --warning         disable warning output
+    -i INPUT, --input INPUT
+                        input file pathname
+    -o OUTPUT, --output OUTPUT
+                        output file pathname
+    -f FORMAT, --format FORMAT
+                        output data format
