@@ -19,7 +19,8 @@ Options:
                         input file pathname
   -o OUTPUT, --output OUTPUT
                         output file pathname
-
+  -f FORMAT, --format FORMAT
+                        output data format
 """
 import os
 import sys
@@ -106,7 +107,7 @@ def main():
 
     parser.add_argument("-i","--input",
         help="input file pathname",
-        required=True,
+        default=None
         )
     parser.add_argument("-o","--output",
         help="output file pathname",
@@ -133,6 +134,10 @@ def main():
 
         print(__doc__)
         return(E_OK)
+
+    if args.input is None:
+
+        print(f"ERROR [{APPNAME}]: missing input")
 
     if args.command == "solve":
 
