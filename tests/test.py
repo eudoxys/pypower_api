@@ -1,4 +1,6 @@
 """Run case tests"""
+import os, sys
+sys.path.append("../pypower_api")
 from case import *
 import numpy as np
 
