@@ -38,24 +38,54 @@ The `Case` class also provide runners for powerflow, OPF, and CDF solvers, inclu
 
 # Command Line
 
-Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
+Syntax: pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]
 
 Commands:
 
-    solve [pf|opf|dcopf|uopf|duopf]
-    print [bus|branch|gen|gencost|dcline|dclinecost]
+  matrix [A|B|D|E|G|Gmin|Gmax|L|S|V|W|Y|Z]
+
+    Prints the graph matrix as follows:
+
+        A - adjacency
+        B - incidence
+        D - degree
+        E - eigenvalues of L
+        G - generation
+     Gmin - minimum generation
+     Gmax - maximum generation
+        L - Laplacian
+        S - loads
+        V - eigenvectors of L
+        Y - admittance
+        Z - impedance
+
+  print [bus|branch|gen|gencost|dcline|dclinecost]
+
+    Prints the model component
+
+  save [-o] FILENAME.EXT
+
+    Save model in JSON, CSV, or PY format
+
+  solve [pf|opf|dcopf|uopf|duopf]
+
+    Solver the network problem
+
+  version
+
+    Displays the current API version
 
 Options:
 
-    -h, --help            show this help message and exit
-    -v, --verbose         enable verbose output
-    -q, --quiet           disable non-error output
-    -s, --silent          disable all output
-    -d, --debug           enable exception traceback
-    -w, --warning         disable warning output
-    -i INPUT, --input INPUT
-                          input file pathname
-    -o OUTPUT, --output OUTPUT
-                          output file pathname
-    -f FORMAT, --format FORMAT
-                          output data format
+  -h, --help            show this help message and exit
+  -v, --verbose         enable verbose output
+  -q, --quiet           disable non-error output
+  -s, --silent          disable all output
+  -d, --debug           enable exception traceback
+  -w, --warning         disable warning output
+  -i INPUT, --input INPUT
+                        input file pathname
+  -o OUTPUT, --output OUTPUT
+                        output file pathname
+  -f FORMAT, --format FORMAT
+                        output data format
