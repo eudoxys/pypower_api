@@ -33,6 +33,10 @@ Commands:
 
     Solve the network problem
 
+  validate
+
+    Validate the model
+
   version
 
     Displays the current API version
@@ -265,6 +269,30 @@ def main() -> int:
             if args.debug:
                 raise
             return E_FAILED
+        return E_OK
+
+    if args.command[0] == "validate":
+
+        try:
+            
+            count,results = case.validate()
+            print(f"{count} errors found")
+            for severity,items in [(x,y) for x,y in results.items() if y]:
+                print(f"Severity level {severity}...")
+                for n,item in enumerate(items):
+                    print(f"{n+1}. {item}")
+
+            return E_FAILED if count > 0 else E_OK
+
+        except:
+            
+            e_type, e_name, _ = sys.exc_info()
+            if not args.silent:
+                print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
+            if args.debug:
+                raise
+            return E_FAILED
+
         return E_OK
 
     print(f"ERROR [{APPNAME}]: '{args.command}' is invalid",file=sys.stderr)

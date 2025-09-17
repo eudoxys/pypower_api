@@ -32,7 +32,7 @@ import pypower.idx_dcline as dcline
 import pypower.idx_cost as cost
 
 try:
-    from index import pp_index, pp_units, pp_format
+    from index import *
     from data import Data
     from bus import Bus
     from branch import Branch
@@ -40,7 +40,7 @@ try:
     from cost import Gencost, Dclinecost
     from dcline import Dcline
 except ModuleNotFoundError:
-    from .index import pp_index, pp_units, pp_format
+    from .index import *
     from .data import Data
     from .bus import Bus
     from .branch import Branch
@@ -248,12 +248,13 @@ class Case:
             print(f"version,{self.version}",file=fh)
             print(f"baseMVA,{self.baseMVA},MVA",file=fh)                
             for key,data in [(x,y) for x,y in self.case.items() if isinstance(y,np.ndarray) and len(y) > 0]:
-                print(",".join([key,str(len(data))]),file=fh)
-                print(",".join([""]+pp_index[key]),file=fh)
+                print(f"section,{key}",file=fh)
+                print(f"records,{len(data)}",file=fh)
+                print(",".join(["field"]+pp_index[key]),file=fh)
                 if with_units:
-                    print(",".join([""]+[(pp_units[key][x] if pp_units[key][x] else "") for x in pp_index[key]]),file=fh)
+                    print(",".join(["units"]+[(pp_units[key][x] if pp_units[key][x] else "") for x in pp_index[key]]),file=fh)
                 for n,row in enumerate(data.tolist()):
-                    print(n,end="",file=fh)
+                    # print(n,end="",file=fh)
                     for m,value in enumerate(row):
                         try:
                             fmt = pp_format[key][pp_index[key][m]]
@@ -261,7 +262,6 @@ class Case:
                             fmt = pp_format[key][pp_index[key][-1]]
                         print(f",%{fmt}"%value,end="",file=fh)
                     print(file=fh)
-                    # print(",".join([str(n)]+[pp_format[key][i](x) if callable(pp_format[key][i]) else f"%{pp_format[key][i]}"%x for i,x in zip(pp_index[key],row)]),file=fh)
 
     def write_json(self,
             file:str=None,
@@ -677,11 +677,21 @@ class Case:
             3 : [], # invalid condition, failure certain
         }
 
+        # check fields
+        for section in pp_index.keys():
+            for row,values in enumerate(getattr(self,section).tolist()):
+                for col,value in enumerate(values):
+                    field = pp_index[section][col if col < len(pp_index[section]) else -1]
+                    check = pp_check[section][field]
+                    if not check(value):
+                        result[3].append(f"{section} {row} {field}={value} is invalid")
+
         # check bus values
         count = 0
+        buslist = set([x.BUS_I for _,x in self.items("bus")])
         for n,x in self.items("bus"):
-            if x.BUS_I <= 0 or x.BUS_I > self.N:
+            if x.BUS_I not in buslist:
                 result[3].append(f"bus {n} has invalid BUS_I={x.BUS_I}")
                 count += 1
-            # TODO
+            
         return count,result

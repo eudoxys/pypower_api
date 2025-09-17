@@ -71,6 +71,10 @@ Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
 
     solve [pf|opf|dcopf|uopf|duopf]
 
+  Validate the model
+
+    validate
+
   Displays the current API version
 
     version

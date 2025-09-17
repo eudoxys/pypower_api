@@ -125,6 +125,8 @@ for file in os.listdir("."):
             OUT_QG_LIM=0,
             )
         print(f"Testing {test.name}...",end="",flush=True,file=sys.stderr)
+        count,report = test.validate()
+        assert count == 0, f"{file}:\n# Validation failed\n\n{count} errors found.\n\n{'\n'.join([f'## Severity level {x}\n\n- {"\n- ".join(y)}' for x,y in report.items() if y])}"
         assert test.runpf(os.devnull,os.devnull), f"{file} runpf failed"
         assert test.rundcopf(os.devnull,os.devnull), f"{file} rundcopf failed"
         assert test.runduopf(os.devnull,os.devnull), f"{file} runduopf failed"
