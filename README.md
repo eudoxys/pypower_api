@@ -1,3 +1,5 @@
+[![validate](https://github.com/eudoxys/pypower_api/actions/workflows/validate.yml/badge.svg)](https://github.com/eudoxys/pypower_api/actions/workflows/validate.yml)
+
 # PyPOWER API
 
 A Python convenience API is available for developers who wish to use [PyPOWER](https://github.com/rwl/PYPOWER) as part of their applications.  The API provides the following convenience classes
