@@ -49,13 +49,13 @@ Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
   * `A` - adjacency
   * `B` - incidence
   * `D` - degree
-  * `E` - eigenvalues of $L$
+  * `E` - eigenvalues of `L`
   * `G` - generation
   * `Gmin` - minimum generation
   * `Gmax` - maximum generation
   * `L` - Laplacian
   * `S` - loads
-  * `V` - eigenvectors of $L$
+  * `V` - eigenvectors of `L`
   * `Y` - admittance
   * `Z` - impedance
 
