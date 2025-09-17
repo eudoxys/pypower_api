@@ -22,21 +22,39 @@ The `Case` class also provide runners for powerflow, OPF, and CDF solvers, inclu
 
 ## Create a new case
 
+TODO
+
 ## Adding objects
+
+TODO
 
 ## Delete objects
 
+TODO
+
 ## Access object data
+
+TODO
 
 ## Iterating over objects
 
+TODO
+
 ## Saving a case
+
+TODO
 
 ## Reading a case
 
+TODO
+
 ## Solving a case
 
+TODO
+
 ## Extracting matrices
+
+TODO
 
 # Command Line
 
