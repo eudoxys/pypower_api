@@ -31,7 +31,7 @@ Commands:
 
   solve [pf|opf|dcopf|uopf|duopf]
 
-    Solver the network problem
+    Solve the network problem
 
   version
 
