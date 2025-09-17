@@ -32,7 +32,7 @@ import pypower.idx_dcline as dcline
 import pypower.idx_cost as cost
 
 try:
-    from index import pp_index
+    from index import pp_index, pp_units, pp_format
     from data import Data
     from bus import Bus
     from branch import Branch
@@ -40,7 +40,7 @@ try:
     from cost import Gencost, Dclinecost
     from dcline import Dcline
 except ModuleNotFoundError:
-    from .index import pp_index
+    from .index import pp_index, pp_units, pp_format
     from .data import Data
     from .bus import Bus
     from .branch import Branch
@@ -240,17 +240,28 @@ class Case:
 
     def write_csv(self,
             file:str=None,
+            with_units=True,
             ):
         """Write CSV file"""
         with open(file,"w") as fh:
             print("application,pypower",file=fh)
             print(f"version,{self.version}",file=fh)
-            print(f"baseMVA,{self.baseMVA}",file=fh)
+            print(f"baseMVA,{self.baseMVA},MVA",file=fh)                
             for key,data in [(x,y) for x,y in self.case.items() if isinstance(y,np.ndarray) and len(y) > 0]:
                 print(",".join([key,str(len(data))]),file=fh)
-                print(",".join(["ID"]+pp_index[key]),file=fh)
+                print(",".join([""]+pp_index[key]),file=fh)
+                if with_units:
+                    print(",".join([""]+[(pp_units[key][x] if pp_units[key][x] else "") for x in pp_index[key]]),file=fh)
                 for n,row in enumerate(data.tolist()):
-                    print(",".join([str(n)]+[str(x) for x in row]),file=fh)
+                    print(n,end="",file=fh)
+                    for m,value in enumerate(row):
+                        try:
+                            fmt = pp_format[key][pp_index[key][m]]
+                        except IndexError:
+                            fmt = pp_format[key][pp_index[key][-1]]
+                        print(f",%{fmt}"%value,end="",file=fh)
+                    print(file=fh)
+                    # print(",".join([str(n)]+[pp_format[key][i](x) if callable(pp_format[key][i]) else f"%{pp_format[key][i]}"%x for i,x in zip(pp_index[key],row)]),file=fh)
 
     def write_json(self,
             file:str=None,
