@@ -11,6 +11,7 @@ import importlib
 import io
 import numpy as np
 import re
+import json
 from typing import TypeVar, Any
 
 import pypower
@@ -210,7 +211,7 @@ class Case:
         """Convert case to dict"""
         return self.case
 
-    def write(self,
+    def write_py(self,
             file:str=None,
             ):
         """Write case to file"""
@@ -236,6 +237,47 @@ class Case:
                 else:
                     print(f"""    "{tag}": {repr(data)},""",file=fh)
             print(f"}}",file=fh)
+
+    def write_csv(self,
+            file:str=None,
+            ):
+        """Write CSV file"""
+        with open(file,"w") as fh:
+            print("application,pypower",file=fh)
+            print(f"version,{self.version}",file=fh)
+            print(f"baseMVA,{self.baseMVA}",file=fh)
+            for key,data in [(x,y) for x,y in self.case.items() if isinstance(y,np.ndarray) and len(y) > 0]:
+                print(",".join([key,str(len(data))]),file=fh)
+                print(",".join(["ID"]+pp_index[key]),file=fh)
+                for n,row in enumerate(data.tolist()):
+                    print(",".join([str(n)]+[str(x) for x in row]),file=fh)
+
+    def write_json(self,
+            file:str=None,
+            ):
+        """Write JSON file"""
+        with open(file,"w") as fh:
+            result = {
+                "application" : "pypower",
+                "version" : self.version,
+                "basemva" : self.baseMVA,
+            }
+            for key,value in [(x,y) for x,y in self.case.items() if isinstance(y,np.ndarray)]:
+                result[key] = self.case[key].tolist()
+            json.dump(result,fh,indent=2)
+
+    def write(self,
+            file:str=None,
+            ):
+        """Save case to file format"""
+        ext = os.path.splitext(file)[1]
+        if ext == ".py":
+            return self.write_py(file)
+        if ext == ".csv":
+            return self.write_csv(file)
+        if ext == ".json":
+            return self.write_json(file)
+        raise ValueError(f"{ext=} is not a supported file format")
 
     def run(self,
             call:callable,
