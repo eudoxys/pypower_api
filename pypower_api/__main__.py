@@ -13,8 +13,8 @@ Commands:
         D - degree
         E - eigenvalues of L
         G - generation
-        Gmin - minimum generation
-        Gmax - maximum generation
+     Gmin - minimum generation
+     Gmax - maximum generation
         L - Laplacian
         S - loads
         V - eigenvectors of L
@@ -24,6 +24,10 @@ Commands:
   print [bus|branch|gen|gencost|dcline|dclinecost]
 
     Prints the model component
+
+  save [-o] FILENAME.EXT
+
+    Save model in JSON, CSV, or PY format
 
   solve [pf|opf|dcopf|uopf|duopf]
 
@@ -204,49 +208,64 @@ def main() -> int:
     case = Case(args.input)
 
     largs = [] if len(args.command) < 2 else args.command[1:]
+    pargs = [x for x in largs if not "=" in x]
+    kargs = {x[0]:"=".join(x[1:]) for x in largs if "=" in x}
 
     if args.command[0] == "solve":
 
-        pargs = [x for x in largs if not "=" in x]
-        kargs = {x[0]:"=".join(x[1:]) for x in largs if "=" in x}
         try:
             result = _solve(case,*pargs,**kargs)
         except:
             e_type, e_name, _ = sys.exc_info()
-            print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
+            if not args.silent:
+                print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
             if args.debug:
                 raise
             return E_FAILED
         return E_OK if result else E_FAILED
 
-    if args.command == "print":
+    if args.command[0] == "print":
 
-        pargs = [x for x in largs if not "=" in x]
-        kargs = {x[0]:"=".join(x[1:]) for x in largs if "=" in x}
         try:
             _print(case,args.output,args.format,*pargs,**kargs)
         except:
             e_type, e_name, _ = sys.exc_info()
-            print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
+            if not args.silent:
+                print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
             if args.debug:
                 raise
             return E_FAILED
         return E_OK
 
-    if args.command == "matrix":
+    if args.command[0] == "matrix":
 
-        pargs = [x for x in largs if not "=" in x]
-        kargs = {x[0]:"=".join(x[1:]) for x in largs if "=" in x}
         try:
             _matrix(case,args.output,args.format,str,*pargs,**kargs)
         except:
             e_type, e_name, _ = sys.exc_info()
-            print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
+            if not args.silent:
+                print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
             if args.debug:
                 raise
             return E_FAILED
         return E_OK
 
+    if args.command[0] == "save":
+
+        pargs = [x for x in largs if not "=" in x]
+        kargs = {x[0]:"=".join(x[1:]) for x in largs if "=" in x}
+
+        try:
+            for file in pargs + (args.output.split(",") if args.output else []):
+                case.write(file,**kargs)
+        except:
+            e_type, e_name, _ = sys.exc_info()
+            if not args.silent:
+                print(f"ERROR [{APPNAME}]: {e_type.__name__} - {e_name}")
+            if args.debug:
+                raise
+            return E_FAILED
+        return E_OK
 
     print(f"ERROR [{APPNAME}]: '{args.command}' is invalid",file=sys.stderr)
     return E_FAILED
