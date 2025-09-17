@@ -38,7 +38,7 @@ The `Case` class also provide runners for powerflow, OPF, and CDF solvers, inclu
 
 # Command Line
 
-Syntax: pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]
+Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
 
 Commands:
 
