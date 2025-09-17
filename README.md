@@ -59,13 +59,13 @@ Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
   * `Y` - admittance
   * `Z` - impedance
 
-  Print the model component
+  Print the model components
 
     print [bus|branch|gen|gencost|dcline|dclinecost]
 
   Save model in JSON, CSV, or PY format
 
-    save [-o] FILENAME.EXT
+    save [-o] FILENAME.[py,csv,json]
 
   Solve the network problem
 
