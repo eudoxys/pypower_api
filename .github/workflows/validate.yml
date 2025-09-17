@@ -19,7 +19,7 @@ jobs:
         run: |
           python${{matrix.python-version}} -m venv .venv
           source .venv/bin/activate
-          python3 -m pip install --upgrade pip requirements.txt
+          python3 -m pip install --upgrade pip -r requirements.txt
           cd tests
           python3 test.py
 
