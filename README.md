@@ -40,11 +40,11 @@ The `Case` class also provide runners for powerflow, OPF, and CDF solvers, inclu
 
 Syntax: `pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]`
 
-Commands:
+## Commands
+
+  Print the graph matrix
 
     matrix [A|B|D|E|G|Gmin|Gmax|L|S|V|W|Y|Z]
-
-  Prints the graph matrix as follows:
 
   * `A` - adjacency
   * `B` - incidence
@@ -59,23 +59,23 @@ Commands:
   * `Y` - admittance
   * `Z` - impedance
 
+  Print the model component
+
     print [bus|branch|gen|gencost|dcline|dclinecost]
-
-  Prints the model component
-
-    save [-o] FILENAME.EXT
 
   Save model in JSON, CSV, or PY format
 
+    save [-o] FILENAME.EXT
+
+  Solve the network problem
+
     solve [pf|opf|dcopf|uopf|duopf]
-
-  Solver the network problem
-
-    version
 
   Displays the current API version
 
-Options:
+    version
+
+## Options
 
   * `-h`, `--help`: show this help message and exit
   * `-v`, `--verbose`: enable verbose output
