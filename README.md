@@ -4,17 +4,17 @@ A Python convenience API is available for developers who wish to use PyPOWER as 
 
 The `Case`: handles cases, include creating, reading, editing, solving, and writing cases. Cases use the following data accessor classes:
 
-    * `Bus`: access bus objects
+* `Bus`: access bus objects
 
-    * `Branch`: access branch objects
+* `Branch`: access branch objects
 
-    * `Gen`: access generator objects
+* `Gen`: access generator objects
 
-    * `Gencost`: access generator cost objects
+* `Gencost`: access generator cost objects
 
-    * `Dcline`: access DC line objects
+* `Dcline`: access DC line objects
 
-    * `Dclinecost`: access DC line cost objects
+* `Dclinecost`: access DC line cost objects
 
 The `Case` class also provide runners for powerflow, OPF, and CDF solvers, including non-linear heuristic solvers.  In addition, all solver options may be set using the `Case` class.
 
@@ -42,50 +42,47 @@ Syntax: pypower_api [OPTIONS ... ] COMMAND [ARGUMENTS ...]
 
 Commands:
 
-  matrix [A|B|D|E|G|Gmin|Gmax|L|S|V|W|Y|Z]
+    matrix [A|B|D|E|G|Gmin|Gmax|L|S|V|W|Y|Z]
 
-    Prints the graph matrix as follows:
+  Prints the graph matrix as follows:
 
-        A - adjacency
-        B - incidence
-        D - degree
-        E - eigenvalues of L
-        G - generation
-     Gmin - minimum generation
-     Gmax - maximum generation
-        L - Laplacian
-        S - loads
-        V - eigenvectors of L
-        Y - admittance
-        Z - impedance
+  * `A` - adjacency
+  * `B` - incidence
+  * `D` - degree
+  * `E` - eigenvalues of $L$
+  * `G` - generation
+  * `Gmin` - minimum generation
+  * `Gmax` - maximum generation
+  * `L` - Laplacian
+  * `S` - loads
+  * `V` - eigenvectors of $L$
+  * `Y` - admittance
+  * `Z` - impedance
 
-  print [bus|branch|gen|gencost|dcline|dclinecost]
+    print [bus|branch|gen|gencost|dcline|dclinecost]
 
-    Prints the model component
+  Prints the model component
 
-  save [-o] FILENAME.EXT
+    save [-o] FILENAME.EXT
 
-    Save model in JSON, CSV, or PY format
+  Save model in JSON, CSV, or PY format
 
-  solve [pf|opf|dcopf|uopf|duopf]
+    solve [pf|opf|dcopf|uopf|duopf]
 
-    Solver the network problem
+  Solver the network problem
 
-  version
+    version
 
-    Displays the current API version
+  Displays the current API version
 
 Options:
 
-  -h, --help            show this help message and exit
-  -v, --verbose         enable verbose output
-  -q, --quiet           disable non-error output
-  -s, --silent          disable all output
-  -d, --debug           enable exception traceback
-  -w, --warning         disable warning output
-  -i INPUT, --input INPUT
-                        input file pathname
-  -o OUTPUT, --output OUTPUT
-                        output file pathname
-  -f FORMAT, --format FORMAT
-                        output data format
+  * `-h`, `--help`: show this help message and exit
+  * `-v`, `--verbose`: enable verbose output
+  * `-q`, `--quiet`: disable non-error output
+  * `-s`, `--silent`: disable all output
+  * `-d`, `--debug`: enable exception traceback
+  * `-w`, `--warning`: disable warning output
+  * `-i INPUT`, `--input INPUT`: input file pathname
+  * `-o OUTPUT`, `--output OUTPUT`: output file pathname
+  * `-f FORMAT`, `--format FORMAT`: output data format
